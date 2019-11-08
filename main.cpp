@@ -1,4 +1,5 @@
 #include <iostream>
+#include <windows.h>
 
 using namespace std;
 
@@ -17,10 +18,16 @@ int main()
 		cin >> m;
 
 		long int amount_of_elements = n * m;
-		if (amount_of_elements > 134217728) // Размер массива < 512 Мб.
+
+		MEMORYSTATUSEX ms;
+		ms.dwLength = sizeof(ms);
+		GlobalMemoryStatusEx(&ms);
+		cout << (ms.ullTotalPhys / 1024 / 1024) << " Mbyte\n";
+		cout << (ms.ullAvailPhys / 1024 / 1024) << " Mbyte\n";
+
+		if (amount_of_elements > ((ms.ullAvailPhys / 4) - (256 * 1024 * 1024))) //256 Мб в запасе.
 		{
 			cout << "Only the matrix with the number of elements is less than 130 million.\n";
-
 			//Проверка на повторный запуск программы.
 			cout << "Run this program again now? (y/n) (one lowercase letter and 'Enter')\n";
 			cin >> end;
