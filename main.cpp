@@ -3,46 +3,57 @@
 
 using namespace std;
 
+void array_filling()
+{
+
+}
+
 int main()
 {
 	char end = 'y';
 	while (end == 'y')
 	{
-		short int n, m; //Пользовательская размерность массива
-		cout << "Only the matrix with the number of elements is less than 130 million.\n\n";
+		// N, M - размерность массива - строки и столбцы соответственно.
+		short int n, m;
 		cout << "Enter the number of rows in the matrix: (use for input only arabic numeral 0-9)\n";
-		cout << "0 < input <= 32767\n";
+		cout << "0 < only integer number <= 32767\n";
 		cin >> n;
 		cout << "Enter the number of columns in the matrix: (use for input only arabic numeral 0-9)\n";
-		cout << "0 < input <= 32767\n";
+		cout << "0 < only integer number <= 32767\n";
 		cin >> m;
-
+		// Определение максимального количества элементов.
 		long int amount_of_elements = n * m;
-
 		MEMORYSTATUSEX ms;
 		ms.dwLength = sizeof(ms);
 		GlobalMemoryStatusEx(&ms);
-		cout << (ms.ullTotalPhys / 1024 / 1024) << " Mbyte\n";
-		cout << (ms.ullAvailPhys / 1024 / 1024) << " Mbyte\n";
-
-		if (amount_of_elements > ((ms.ullAvailPhys / 4) - (256 * 1024 * 1024))) //256 Мб в запасе.
+		cout << (ms.ullTotalPhys / 1024 / 1024) << " Mbyte - total.\n";
+		cout << (ms.ullAvailPhys / 1024 / 1024) << " Mbyte - available.\n";
+		if (amount_of_elements > ((ms.ullAvailPhys - (256 * 1024 * 1024)) / 2)) //256 Мб в запасе.
 		{
-			cout << "Only the matrix with the number of elements is less than 130 million.\n";
-			//Проверка на повторный запуск программы.
-			cout << "Run this program again now? (y/n) (one lowercase letter and 'Enter')\n";
-			cin >> end;
+			cout << "Matrix of the specified size cannot be created - not enough RAM.\n";
+			cout << "Please, enter a smaller matrix size...\n";
 		}
 		else
 		{
-			long int* arr;
-			arr = new long int[amount_of_elements];
+			cout << "The matrix has been successfully created.\n";
+			//Определение динамического массива.
+			short int** arr;
+			arr = new short int* [n];
+			for (short int i = 0; i < n; i++)
+			{
+				arr[i] = new short int[m];
+			}
 
+			//Удаление динамического массива.
+			for (short int i = 0; i < n; i++)
+			{
+				delete[] arr[i];
+			}
 			delete[] arr;
-
-			//Проверка на повторный запуск программы.
-			cout << "Run this program again now? (y/n) (one lowercase letter and 'Enter')\n";
-			cin >> end;
 		}
+		//Проверка на повторный запуск программы.
+		cout << "Run this program again now? (y/n) (one lowercase letter and 'Enter')\n";
+		cin >> end;
 	}
 	return 0;
 }
