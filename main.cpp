@@ -1,11 +1,33 @@
 #include <iostream>
 #include <windows.h>
+#include <chrono>
 
 using namespace std;
 
-void array_filling()
+void array_filling(short int** arr, short int n, short int m)
 {
+	srand(time(NULL));
+	for (short int i = 0; i < n; i++)
+	{
+		for (short int j = 0; j < m; j++)
+		{
+			arr[i][j] = rand() % 10;
+		}
+	}
+	cout << "The matrix is successfully filled.\n";
+}
 
+void array_print(short int** arr, short int n, short int m)
+{
+	for (short int i = 0; i < n; i++)
+	{
+		for (short int j = 0; j < m; j++)
+		{
+			cout << arr[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << "The array is successfully printed.\n";
 }
 
 int main()
@@ -36,6 +58,7 @@ int main()
 		else
 		{
 			cout << "The matrix has been successfully created.\n";
+			cout << "Please, wait...\n";
 			//Определение динамического массива.
 			short int** arr;
 			arr = new short int* [n];
@@ -43,7 +66,10 @@ int main()
 			{
 				arr[i] = new short int[m];
 			}
-
+			array_filling(arr, n, m);
+			GlobalMemoryStatusEx(&ms);
+			cout << (ms.ullAvailPhys / 1024 / 1024) << " Mbyte - after allocating memory for the array.\n";
+			//array_print(arr, n, m);
 			//Удаление динамического массива.
 			for (short int i = 0; i < n; i++)
 			{
