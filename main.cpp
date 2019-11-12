@@ -46,6 +46,29 @@ void array_print(short int** arr, short int n, short int m)
 	cout << "The array is successfully printed.\n";
 }
 
+void array_print_WA(short int** arr, short int n, short int m)
+{
+	cout << "det({";
+	for (short int i = 0; i < n; i++)
+	{
+		cout << "{";
+		for (short int j = 0; j < m; j++)
+		{
+			cout << arr[i][j];
+			if (j != m - 1)
+			{
+				cout << ",";
+			}
+		}
+		cout << "}";
+		if (i != n - 1)
+		{
+			cout << ",";
+		}
+	}
+	cout << "})\n";
+}
+
 void matr_saddle_points(short int** arr, short int n, short int m)
 {
 	short int max = -1;
@@ -112,40 +135,48 @@ long int matr_determinant(short int** arr, short int n, short int m);
 
 long int matr_minor(short int** arr, short int n, short int m, short int r, short int c)
 {
-	n -= 1;
-	m -= 1;
-	short int i2 = 0;
-	short int j2 = 0;
+	short int* n2;
+	short int* m2;
+	n2 = new short int(n - 1);
+	m2 = new short int(m - 1);
+	short int* i2;
+	short int* j2;
+	i2 = new short int(0);
+	j2 = new short int(0);
 	short int** arr2;
-	arr2 = new short int* [n];
-	for (short int z = 0; z < n; z++)
+	arr2 = new short int* [*n2];
+	for (short int z = 0; z < *n2; z++)
 	{
-		arr2[z] = new short int[m];
+		arr2[z] = new short int[*m2];
 	}
-	for (short int i = 0; i < n; i++)
+	for (short int i = 0; i < *n2; i++)
 	{
 		if (i == r)
 		{
-			i2 = 1;
+			*i2 = 1;
 		}
-		for (short int j = 0; j < m; j++)
+		for (short int j = 0; j < *m2; j++)
 		{
 			if (j == c)
 			{
-				j2 = 1;
+				*j2 = 1;
 			}
-			arr2[i][j] = arr[i + i2][j + j2];
+			arr2[i][j] = arr[i + *i2][j + *j2];
 		}
-		j2 = 0;
+		*j2 = 0;
 	}
-	i2 = 0;
-	array_print(arr2, n, m);
-	long int temp = matr_determinant(arr2, n, m);
-	for (short int z = 0; z < n; z++)
+	*i2 = 0;
+	//array_print(arr2, n, m);
+	long int temp = matr_determinant(arr2, *n2, *m2);
+	delete j2;
+	delete i2;
+	for (short int z = 0; z < *n2; z++)
 	{
 		delete[] arr2[z];
 	}
 	delete[] arr2;
+	delete n2;
+	delete m2;
 	return temp;
 }
 
@@ -178,21 +209,24 @@ int main()
 	while (end == 'y')
 	{
 		// N, M - размерность массива - строки и столбцы соответственно.
-		short int n, m;
+		short int* n,* m;
+		n = new short int;
+		m = new short int;
 		cout << "Enter the number of rows in the matrix: (use for input only arabic numeral 0-9)\n";
 		cout << "0 < only integer number <= 32767\n";
-		cin >> n;
+		cin >> *n;
 		cout << "Enter the number of columns in the matrix: (use for input only arabic numeral 0-9)\n";
 		cout << "0 < only integer number <= 32767\n";
-		cin >> m;
+		cin >> *m;
 		// Определение максимального количества элементов.
-		long int amount_of_elements = n * m;
+		long int* amount_of_elements;
+		amount_of_elements = new long int(*n * *m);
 		MEMORYSTATUSEX ms;
 		ms.dwLength = sizeof(ms);
 		GlobalMemoryStatusEx(&ms);
 		cout << (ms.ullTotalPhys / 1024 / 1024) << " Mbyte - total.\n";
 		cout << (ms.ullAvailPhys / 1024 / 1024) << " Mbyte - available.\n";
-		if (amount_of_elements > ((ms.ullAvailPhys - (256 * 1024 * 1024)) / 2)) //256 Мб в запасе.
+		if (*amount_of_elements > ((ms.ullAvailPhys - (256 * 1024 * 1024)) / 2)) //256 Мб в запасе.
 		{
 			cout << "Matrix of the specified size cannot be created - not enough RAM.\n";
 			cout << "Please, enter a smaller matrix size...\n";
@@ -203,47 +237,72 @@ int main()
 			cout << "Please, wait...\n";
 			//Определение динамического массива.
 			short int** arr;
-			arr = new short int* [n];
-			for (short int i = 0; i < n; i++)
+			arr = new short int* [*n];
+			for (short int i = 0; i < *n; i++)
 			{
-				arr[i] = new short int[m];
+				arr[i] = new short int[*m];
 			}
-			array_filling(arr, n, m);
+			array_filling(arr, *n, *m);
 			//Обновление данных по оп. памяти.
 			GlobalMemoryStatusEx(&ms);
 			cout << (ms.ullAvailPhys / 1024 / 1024) << " Mbyte - after allocating memory for the array.\n";
-			if (n > 70 or m > 70)
+			if (*n > 70 or *m > 70)
 			{
 				cout << "Due to the large size of the matrix, the output formatting will be broken or may take too long, do you want to print the matrix exactly?\n";
 				cout << "enter 'y'(for yes) or 'n'(for no)...\n";
-				char ans;
-				cin >> ans;
-				if (ans == 'y')
+				char* ans;
+				ans = new char;
+				cin >> *ans;
+				if (*ans == 'y')
 				{
-					array_print(arr, n, m);
+					array_print(arr, *n, *m);
 				}
+				delete ans;
 			}
 			else
 			{
-				array_print(arr, n, m);
+				array_print(arr, *n, *m);
 			}
 			cout << "Saddle points index:\n";
-			matr_saddle_points(arr, n, m);
-			if (n == m)
+			matr_saddle_points(arr, *n, *m);
+			if (*n == *m)
 			{
-				cout << "Determinant = " << matr_determinant(arr, n, m) << endl;
+				if (*n <= 10)
+				{
+					cout << "Please, wait...\n";
+					cout << "Determinant = " << matr_determinant(arr, *n, *m) << endl;
+					array_print_WA(arr, *n, *m);
+				}
+				else
+				{
+					cout << "The determinants of such high orders of magnitude are counted slowly, do you want to start the calculations exactly?\n";
+					cout << "enter 'y'(for yes) or 'n'(for no)...\n";
+					char* ans2;
+					ans2 = new char;
+					cin >> *ans2;
+					if (*ans2 == 'y')
+					{
+						cout << "Please, wait...\n";
+						cout << "Determinant = " << matr_determinant(arr, *n, *m) << endl;
+						array_print_WA(arr, *n, *m);
+					}
+					delete ans2;
+				}
 			}
 			else
 			{
 				cout << "Error, only square matrices!\n";
 			}
 			//Удаление динамического массива.
-			for (short int i = 0; i < n; i++)
+			for (short int i = 0; i < *n; i++)
 			{
 				delete[] arr[i];
 			}
 			delete[] arr;
 		}
+		delete n;
+		delete m;
+		delete amount_of_elements;
 		//Проверка на повторный запуск программы.
 		cout << "Run this program again now? (y/n) (one lowercase letter and 'Enter')\n";
 		cin >> end;
