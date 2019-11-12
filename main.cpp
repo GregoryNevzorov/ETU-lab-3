@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <windows.h>
 #include <chrono>
 
@@ -23,8 +24,7 @@ void array_print(short int** arr, short int n, short int m)
 	{
 		for (short int j = 0; j < m; j++)
 		{
-			cout.width(2);
-			cout << arr[i][j] << " ";
+			cout << setfill(' ') << setw(2) << arr[i][j] << " ";
 		}
 		cout << endl;
 	}
@@ -33,12 +33,56 @@ void array_print(short int** arr, short int n, short int m)
 
 void array_saddle_points(short int** arr, short int n, short int m)
 {
+	short int max = -1;
+	short int min = 100;
 	for (short int i = 0; i < n; i++)
 	{
+		//Поиск минимума и максимума в строке
 		for (short int j = 0; j < m; j++)
 		{
-			
+			if (arr[i][j] > max)
+			{
+				max = arr[i][j];
+			}
+			if (arr[i][j] < min)
+			{
+				min = arr[i][j];
+			}
 		}
+		//Седловые точки при минимуме и максимуме в строке.
+		for (short int j = 0; j < m; j++)
+		{
+			if (arr[i][j] == min)
+			{
+				for (short int p = 0; p < n; p++)
+				{
+					if (arr[p][j] > arr[i][j] and p != i)
+					{
+						break;
+					}
+					else  if (p == n - 1)
+					{
+						cout << i << " " << j << endl;
+					}
+				}
+			}
+			if (arr[i][j] == max)
+			{
+				for (short int p = 0; p < n; p++)
+				{
+					if (arr[p][j] < arr[i][j] and p != i)
+					{
+						break;
+					}
+					else if (p == n - 1)
+					{
+						cout << i << " " << j << endl;
+					}
+				}
+			}
+		}
+		min = 100;
+		max = -1;
 	}
 }
 
