@@ -46,7 +46,7 @@ void array_print(short int** arr, short int n, short int m)
 	cout << "The array is successfully printed.\n";
 }
 
-void array_saddle_points(short int** arr, short int n, short int m)
+void matr_saddle_points(short int** arr, short int n, short int m)
 {
 	short int max = -1;
 	short int min = 100;
@@ -108,13 +108,32 @@ void array_saddle_points(short int** arr, short int n, short int m)
 	}
 }
 
-long int array_determinant(short int** arr, short int n, short int m)
+long int matr_minor(short int** arr, short int n, short int m, short int i, short int j)
 {
-	short int determinant = 0;
-	for (short int j = 0; j < m; j++)
+	return 0;
+}
+
+long int matr_determinant(short int** arr, short int n, short int m)
+{
+	long int determinant = 0;
+	if (n == 1)
 	{
-		determinant += expt(-1, (1 + (j + 1)));
+		determinant = arr[0][0];
 	}
+	else if (n == 2)
+	{
+		determinant = (arr[0][0] * arr[1][1]) - (arr[0][1] * arr[1][0]);
+	}
+	else if (n == 3)
+	{
+		determinant = ((arr[0][0] * arr[1][1] * arr[2][2]) + (arr[0][1] * arr[1][2] * arr[2][0]) + (arr[0][2] * arr[1][0] * arr[2][1]))
+			- ((arr[0][2] * arr[1][1] * arr[2][0]) + (arr[0][0] * arr[1][2] * arr[2][1]) + (arr[0][1] * arr[1][0] * arr[2][2]));
+	}
+	else for (short int j = 0; j < m; j++)
+	{
+		determinant += expt(-1, (1 + (j + 1))) * arr[0][j] * matr_minor(arr, n, m, 0, j);
+	}
+	return determinant;
 }
 
 int main()
@@ -173,10 +192,10 @@ int main()
 				array_print(arr, n, m);
 			}
 			cout << "Saddle points index:\n";
-			array_saddle_points(arr, n, m);
+			matr_saddle_points(arr, n, m);
 			if (n == m)
 			{
-				cout << "Determinant = " << array_determinant(arr, n, m) << endl;
+				cout << "Determinant = " << matr_determinant(arr, n, m) << endl;
 			}
 			else
 			{
