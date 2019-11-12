@@ -56,11 +56,11 @@ void array_saddle_points(short int** arr, short int n, short int m)
 			{
 				for (short int p = 0; p < n; p++)
 				{
-					if (arr[p][j] > arr[i][j] and p != i)
+					if (arr[p][j] > arr[i][j])
 					{
 						break;
 					}
-					else  if (p == n - 1)
+					if (p == n - 1)
 					{
 						cout << i << " " << j << endl;
 					}
@@ -70,11 +70,11 @@ void array_saddle_points(short int** arr, short int n, short int m)
 			{
 				for (short int p = 0; p < n; p++)
 				{
-					if (arr[p][j] < arr[i][j] and p != i)
+					if (arr[p][j] < arr[i][j])
 					{
 						break;
 					}
-					else if (p == n - 1)
+					if (p == n - 1)
 					{
 						cout << i << " " << j << endl;
 					}
@@ -141,6 +141,7 @@ int main()
 			{
 				array_print(arr, n, m);
 			}
+			cout << "Saddle points index:\n";
 			array_saddle_points(arr, n, m);
 			//Удаление динамического массива.
 			for (short int i = 0; i < n; i++)
