@@ -5,6 +5,21 @@
 
 using namespace std;
 
+long int expt(long int x, long int n) //Only integer and n >= 0.
+{
+	if (n == 0)
+	{
+		return 1;
+	}
+	long int answer = 1;
+	while (n != 0)
+	{
+		answer *= x;
+		n -= 1;
+	}
+	return answer;
+}
+
 void array_filling(short int** arr, short int n, short int m)
 {
 	srand(time(NULL));
@@ -95,7 +110,11 @@ void array_saddle_points(short int** arr, short int n, short int m)
 
 long int array_determinant(short int** arr, short int n, short int m)
 {
-
+	short int determinant = 0;
+	for (short int j = 0; j < m; j++)
+	{
+		determinant += expt(-1, (1 + (j + 1)));
+	}
 }
 
 int main()
