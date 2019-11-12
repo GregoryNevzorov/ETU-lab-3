@@ -108,9 +108,45 @@ void matr_saddle_points(short int** arr, short int n, short int m)
 	}
 }
 
-long int matr_minor(short int** arr, short int n, short int m, short int i, short int j)
+long int matr_determinant(short int** arr, short int n, short int m);
+
+long int matr_minor(short int** arr, short int n, short int m, short int r, short int c)
 {
-	return 0;
+	n -= 1;
+	m -= 1;
+	short int i2 = 0;
+	short int j2 = 0;
+	short int** arr2;
+	arr2 = new short int* [n];
+	for (short int z = 0; z < n; z++)
+	{
+		arr2[z] = new short int[m];
+	}
+	for (short int i = 0; i < n; i++)
+	{
+		if (i == r)
+		{
+			i2 = 1;
+		}
+		for (short int j = 0; j < m; j++)
+		{
+			if (j == c)
+			{
+				j2 = 1;
+			}
+			arr2[i][j] = arr[i + i2][j + j2];
+		}
+		j2 = 0;
+	}
+	i2 = 0;
+	array_print(arr2, n, m);
+	long int temp = matr_determinant(arr2, n, m);
+	for (short int z = 0; z < n; z++)
+	{
+		delete[] arr2[z];
+	}
+	delete[] arr2;
+	return temp;
 }
 
 long int matr_determinant(short int** arr, short int n, short int m)
