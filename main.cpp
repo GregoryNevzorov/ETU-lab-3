@@ -166,7 +166,7 @@ long int matr_minor(short int** arr, short int n, short int m, short int r, shor
 		*j2 = 0;
 	}
 	*i2 = 0;
-	//array_print(arr2, n, m);
+	//array_print(arr2, *n2, *m2);
 	long int temp = matr_determinant(arr2, *n2, *m2);
 	delete j2;
 	delete i2;
