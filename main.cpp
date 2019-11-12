@@ -35,6 +35,7 @@ void array_saddle_points(short int** arr, short int n, short int m)
 {
 	short int max = -1;
 	short int min = 100;
+	short int counter = 0;
 	for (short int i = 0; i < n; i++)
 	{
 		//Поиск минимума и максимума в строке
@@ -63,6 +64,7 @@ void array_saddle_points(short int** arr, short int n, short int m)
 					if (p == n - 1)
 					{
 						cout << i << " " << j << endl;
+						counter += 1;
 					}
 				}
 			}
@@ -77,6 +79,7 @@ void array_saddle_points(short int** arr, short int n, short int m)
 					if (p == n - 1)
 					{
 						cout << i << " " << j << endl;
+						counter += 1;
 					}
 				}
 			}
@@ -84,6 +87,15 @@ void array_saddle_points(short int** arr, short int n, short int m)
 		min = 100;
 		max = -1;
 	}
+	if (counter == 0)
+	{
+		cout << "No one was found.\n";
+	}
+}
+
+long int array_determinant(short int** arr, short int n, short int m)
+{
+
 }
 
 int main()
@@ -143,6 +155,14 @@ int main()
 			}
 			cout << "Saddle points index:\n";
 			array_saddle_points(arr, n, m);
+			if (n == m)
+			{
+				cout << "Determinant = " << array_determinant(arr, n, m) << endl;
+			}
+			else
+			{
+				cout << "Error, only square matrices!\n";
+			}
 			//Удаление динамического массива.
 			for (short int i = 0; i < n; i++)
 			{
