@@ -33,7 +33,7 @@ void array_filling(short int** arr, short int n, short int m)
 	cout << "The matrix is successfully filled.\n";
 }
 
-void arrar_filling_manual(short int** arr, short int n, short int m)
+void array_filling_manual(short int** arr, short int n, short int m)
 {
 	cout << "Enter arabic natural numbers less than 100, by separating the elements with the help of button 'Enter'.\n";
 	for (short int i = 0; i < n; i++)
@@ -267,7 +267,7 @@ int main()
 			}
 			else
 			{
-				arrar_filling_manual(arr, *n, *m);
+				array_filling_manual(arr, *n, *m);
 			}
 			delete inp;
 			//Обновление данных по оп. памяти.
