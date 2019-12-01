@@ -33,6 +33,20 @@ void array_filling(short int** arr, short int n, short int m)
 	cout << "The matrix is successfully filled.\n";
 }
 
+void arrar_filling_manual(short int** arr, short int n, short int m)
+{
+	cout << "Enter arabic natural numbers less than 100, by separating the elements with the help of button 'Enter'.\n";
+	for (short int i = 0; i < n; i++)
+	{
+		for (short int j = 0; j < m; j++)
+		{
+			cout << "arr[" << i + 1 << "][" << j + 1 << "] = ";
+			cin >> arr[i][j];
+		}
+	}
+	cout << "The matrix is successfully filled.\n";
+}
+
 void array_print(short int** arr, short int n, short int m)
 {
 	for (short int i = 0; i < n; i++)
@@ -242,7 +256,19 @@ int main()
 			{
 				arr[i] = new short int[*m];
 			}
-			array_filling(arr, *n, *m);
+			cout << "Press 1 or 2 and Enter:\n";
+			cout << "1. array_filling\n";
+			cout << "2. array_filling_manual\n";
+			short int inp;
+			cin >> inp;
+			if (inp == 1)
+			{
+				array_filling(arr, *n, *m);
+			}
+			else
+			{
+				arrar_filling_manual(arr, *n, *m);
+			}
 			//Обновление данных по оп. памяти.
 			GlobalMemoryStatusEx(&ms);
 			cout << (ms.ullAvailPhys / 1024 / 1024) << " Mbyte - after allocating memory for the array.\n";
