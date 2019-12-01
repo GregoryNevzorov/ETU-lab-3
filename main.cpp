@@ -259,9 +259,9 @@ int main()
 			cout << "Press 1 or 2 and Enter:\n";
 			cout << "1. array_filling\n";
 			cout << "2. array_filling_manual\n";
-			short int inp;
-			cin >> inp;
-			if (inp == 1)
+			short int* inp = new short int;
+			cin >> *inp;
+			if (*inp == 1)
 			{
 				array_filling(arr, *n, *m);
 			}
@@ -269,6 +269,7 @@ int main()
 			{
 				arrar_filling_manual(arr, *n, *m);
 			}
+			delete inp;
 			//Обновление данных по оп. памяти.
 			GlobalMemoryStatusEx(&ms);
 			cout << (ms.ullAvailPhys / 1024 / 1024) << " Mbyte - after allocating memory for the array.\n";
